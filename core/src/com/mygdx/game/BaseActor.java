@@ -320,7 +320,7 @@ public class BaseActor extends Actor
     public void accelerateAtAngle(float angle)
     {
         accelerationVec.add(
-                new Vector2(acceleration, 0).setAngle(angle) );
+                new Vector2(acceleration, 0).setAngleDeg(angle) );
     }
 
     /**
