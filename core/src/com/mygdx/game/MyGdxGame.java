@@ -1,15 +1,11 @@
 package com.mygdx.game;
 
-public class MyGdxGame extends GameBeta {
+import com.mygdx.game.screen.LevelScreen;
 
-
-	@Override
-	public void initialize() {
-
+public class MyGdxGame extends BaseGame {
+	public void create(){
+		super.create();
+		setActiveScreen(new LevelScreen());
 	}
 
-	@Override
-	public void update(float dt) {
-
-	}
 }
