@@ -1,6 +1,7 @@
 package com.mygdx.game;
 
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 
 import com.badlogic.gdx.Gdx;
@@ -34,7 +35,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
  * @see #Actor
  * @author Lee Stemkoski
  */
-public class BaseActor extends Actor
+public class BaseActor extends Group
 {
     private Animation<TextureRegion> animation;
     private float elapsedTime;
@@ -472,6 +473,30 @@ public class BaseActor extends Actor
     }
 
     /**
+     *  Determine if this BaseActor is near other BaseActor (according to collision polygons).
+     *  @param distance amount (pixels) by which to enlarge collision polygon width and height
+     *  @param other BaseActor to check if nearby
+     *  @return true if collision polygons of this (enlarged) and other BaseActor overlap
+     *  @see #setBoundaryRectangle
+     *  @see #setBoundaryPolygon
+     */
+    public boolean isWithinDistance(float distance, BaseActor other)
+    {
+        Polygon poly1 = this.getBoundaryPolygon();
+        float scaleX = (this.getWidth() + 2 * distance) / this.getWidth();
+        float scaleY = (this.getHeight() + 2 * distance) / this.getHeight();
+        poly1.setScale(scaleX, scaleY);
+
+        Polygon poly2 = other.getBoundaryPolygon();
+
+        // initial test to improve performance
+        if ( !poly1.getBoundingRectangle().overlaps(poly2.getBoundingRectangle()) )
+            return false;
+
+        return Intersector.overlapConvexPolygons( poly1, poly2 );
+    }
+
+    /**
      *  Set world dimensions for use by methods boundToWorld() and scrollTo().
      *  @param width width of world
      *  @param height height of world
@@ -491,6 +516,14 @@ public class BaseActor extends Actor
     }
 
     /**
+     *  Get world dimensions
+     *  @return Rectangle whose width/height represent world bounds
+     */
+    public static Rectangle getWorldBounds()
+    {
+        return worldBounds;
+    }
+    /**
      * If an edge of an object moves past the world bounds,
      *   adjust its position to keep it completely on screen.
      */
@@ -506,6 +539,24 @@ public class BaseActor extends Actor
             setY(worldBounds.height - getHeight());
     }
 
+    /**
+     *  If this object moves completely past the world bounds,
+     *  adjust its position to the opposite side of the world.
+     */
+    public void wrapAroundWorld()
+    {
+        if (getX() + getWidth() < 0)
+            setX( worldBounds.width );
+
+        if (getX() > worldBounds.width)
+            setX( -getWidth());
+
+        if (getY() + getHeight() < 0)
+            setY( worldBounds.height );
+
+        if (getY() > worldBounds.height)
+            setY( -getHeight() );
+    }
     /**
      *  Center camera on this object, while keeping camera's range of view
      *  (determined by screen size) completely within world bounds.
@@ -595,7 +646,6 @@ public class BaseActor extends Actor
      */
     public void draw(Batch batch, float parentAlpha)
     {
-        super.draw( batch, parentAlpha );
 
         // apply color tint effect
         Color c = getColor();
@@ -605,6 +655,7 @@ public class BaseActor extends Actor
             batch.draw( animation.getKeyFrame(elapsedTime),
                     getX(), getY(), getOriginX(), getOriginY(),
                     getWidth(), getHeight(), getScaleX(), getScaleY(), getRotation() );
+        super.draw( batch, parentAlpha );
     }
 
 }
