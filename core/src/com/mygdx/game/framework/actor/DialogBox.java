@@ -1,11 +1,10 @@
-package com.mygdx.game.actor;
+package com.mygdx.game.framework.actor;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.utils.Align;
-import com.mygdx.game.BaseActor;
-import com.mygdx.game.BaseGame;
+import com.mygdx.game.framework.game.BaseGame;
 
 public class DialogBox extends BaseActor {
     private Label dialogLabel;

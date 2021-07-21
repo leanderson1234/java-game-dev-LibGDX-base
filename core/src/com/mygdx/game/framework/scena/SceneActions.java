@@ -1,9 +1,9 @@
-package com.mygdx.game.scena;
+package com.mygdx.game.framework.scena;
 
 import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.utils.Align;
-import com.mygdx.game.BaseActor;
+import com.mygdx.game.framework.actor.BaseActor;
 
 public class SceneActions extends Actions
 {

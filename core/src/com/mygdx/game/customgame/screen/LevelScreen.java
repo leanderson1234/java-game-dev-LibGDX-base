@@ -1,6 +1,6 @@
-package com.mygdx.game.screen;
+package com.mygdx.game.customgame.screen;
 
-import com.mygdx.game.BaseScreen;
+import com.mygdx.game.framework.screen.BaseScreen;
 
 public class LevelScreen extends BaseScreen {
     @Override

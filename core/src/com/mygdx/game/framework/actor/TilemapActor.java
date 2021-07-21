@@ -1,4 +1,4 @@
-package com.mygdx.game;
+package com.mygdx.game.framework.actor;
 
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -14,6 +14,7 @@ import com.badlogic.gdx.maps.tiled.objects.TiledMapTileMapObject;
 import com.badlogic.gdx.maps.tiled.renderers.OrthoCachedTiledMapRenderer;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.mygdx.game.framework.actor.BaseActor;
 
 import java.util.ArrayList;
 import java.util.Iterator;
